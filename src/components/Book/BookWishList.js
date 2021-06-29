@@ -1,16 +1,22 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { Button, Card } from 'react-native-paper';
-import bookImg from '../../../assets/bookCover.jpg';
 import colors from '../../styles/colors';
+import { URL_IMG, URL_SITE } from '../../utils/constants'
+import * as Linking from 'expo-linking';
 
-export default function BookWishList({ title, price }) {
+export default function BookWishList({idBook, title, price, imgUrl }) {
+
+    const goToBrowser = () =>{
+        Linking.openURL( `${ URL_SITE }/libro/${ idBook }`  );
+    }
+
     return (
         <Card  mode="outlined" style={{ width: '100%', height: 130, marginVertical: 5 }}  >
             <View style={ styles.bookContainer } >  
                 <Card.Cover 
                     style={ styles.book_img }
-                    source={ bookImg }  
+                    source={{ uri: `${ URL_IMG }/${ imgUrl }` }}  
                 />                          
                 
                 <Card.Content style={ styles.book_content } >
@@ -27,7 +33,7 @@ export default function BookWishList({ title, price }) {
                         uppercase={ false }
                         mode="contained"   
                         compact                  
-                        onPress={ () =>  console.log(`Ver libro: ${ title }`) }
+                        onPress={ goToBrowser }
                     >Ir al sitio</Button>
                 </Card.Content>
             </View>

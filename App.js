@@ -55,6 +55,7 @@ export default function App() {
         <AuthContext.Provider value={ authData } >
             <PaperProvider style={styles.container}>                            
                 {auth ? <AppNavigation /> : <AuthScreen />}
+                {/* <AppNavigation /> */}
             </PaperProvider>
             <Toast ref={(ref) => Toast.setRef(ref)} />
         </AuthContext.Provider>
