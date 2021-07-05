@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
-import { Searchbar } from "react-native-paper";
 import NewBooks from "../components/Home/NewBooks";
 import RecentlyViewedBooks from "../components/Home/RecentlyViewedBooks";
+import SearchBarCustom from "../components/SearchBarCustom";
 import StatusBarCustom from "../components/StatusBarCustom";
 
 export default function Home() {
-    const [searchQuery, setSearchQuery] = useState("");
 
-    const onChangeSearch = (query) => setSearchQuery(query);
     return (
         <>
-            <StatusBarCustom backgroundColor="#84b6f4" />
+            <StatusBarCustom backgroundColor="#397f77" />
             <View style={styles.containerBackground}>
-                <Searchbar
-                    placeholder="Search"
-                    onChangeText={onChangeSearch}
-                    value={searchQuery}
-                    placeholder="Ecuentra tus ebooks"
-                />
+                <SearchBarCustom />
                 <View style={styles.containerTitleWelcome}>
                     <Text style={styles.titleWelcome}>Bienvenid@</Text>
                     <Text style={styles.titleNameUser}>Uziel Meliton</Text>
@@ -26,7 +19,7 @@ export default function Home() {
             </View>
             <ScrollView style={styles.container}>
                 <NewBooks />
-                <RecentlyViewedBooks />
+                {/* <RecentlyViewedBooks /> */}
             </ScrollView>
         </>
     );
@@ -35,12 +28,12 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
+        paddingTop: 0        
     },
     containerBackground: {
         paddingHorizontal: 20,
         paddingTop: 20,
-        backgroundColor: "#84b6f4",
-        marginBottom: 5,
+        backgroundColor: "#397f77"        
     },
     containerTitleWelcome: {
         flexDirection: "row",
@@ -50,9 +43,11 @@ const styles = StyleSheet.create({
     titleWelcome: {
         fontWeight: "bold",
         fontSize: 21,
+        color: '#fff'
     },
     titleNameUser: {
         fontSize: 20,
         marginLeft: 5,
+        color: '#fff'
     },
 });
