@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     },
     titleSection:{
         marginVertical: 10,
-        fontSize: 14
+        fontSize: 14,
+        color: '#555'
     }
 })
 
