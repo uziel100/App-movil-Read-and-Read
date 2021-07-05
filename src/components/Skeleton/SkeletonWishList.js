@@ -5,7 +5,7 @@ export default function SkeletonWishList() {
     return (
         <>
             <View style={{ marginBottom: 10 }}>
-                <SkeletonPlaceholder speed={1000}>
+                <SkeletonPlaceholder speed={0}>
                     <SkeletonPlaceholder.Item
                         flexDirection="row"
                         alignItems="center"
@@ -36,7 +36,7 @@ export default function SkeletonWishList() {
                         </SkeletonPlaceholder.Item>
                     </SkeletonPlaceholder.Item>
                 </SkeletonPlaceholder>
-                <SkeletonPlaceholder speed={1000}>
+                <SkeletonPlaceholder speed={0}>
                     <SkeletonPlaceholder.Item
                         flexDirection="row"
                         alignItems="center"
@@ -69,7 +69,7 @@ export default function SkeletonWishList() {
                 </SkeletonPlaceholder>
             </View>
             <View style={{ marginBottom: 10 }}>
-                <SkeletonPlaceholder speed={1000}>
+                <SkeletonPlaceholder speed={0}>
                     <SkeletonPlaceholder.Item
                         flexDirection="row"
                         alignItems="center"
@@ -100,7 +100,7 @@ export default function SkeletonWishList() {
                         </SkeletonPlaceholder.Item>
                     </SkeletonPlaceholder.Item>
                 </SkeletonPlaceholder>
-                <SkeletonPlaceholder speed={1000}>
+                <SkeletonPlaceholder speed={0}>
                     <SkeletonPlaceholder.Item
                         flexDirection="row"
                         alignItems="center"
@@ -133,7 +133,7 @@ export default function SkeletonWishList() {
                 </SkeletonPlaceholder>
             </View>
             <View style={{ marginBottom: 10 }}>
-                <SkeletonPlaceholder speed={1000}>
+                <SkeletonPlaceholder speed={0}>
                     <SkeletonPlaceholder.Item
                         flexDirection="row"
                         alignItems="center"
@@ -164,7 +164,7 @@ export default function SkeletonWishList() {
                         </SkeletonPlaceholder.Item>
                     </SkeletonPlaceholder.Item>
                 </SkeletonPlaceholder>
-                <SkeletonPlaceholder speed={1000}>
+                <SkeletonPlaceholder speed={0}>
                     <SkeletonPlaceholder.Item
                         flexDirection="row"
                         alignItems="center"

@@ -1,28 +1,14 @@
 
+import { API_URL } from '../utils/constants'
 
-
-export const getWishListApi =   () => {
-    // return [];
-    return[
-        {
-            id: 1,
-            title: 'El señor de los cielos de todos los dias',
-            price: 235,            
-        },
-        {
-            id: 2,
-            title: 'Demon slayer: Kimetsu no Yaiba - Tren infinito',
-            price: 299.99, 
-        },
-        {
-            id: 3,
-            title: 'El señor de los cielos de todos los dias',
-            price: 235,            
-        },
-        {
-            id: 4,
-            title: 'Demon slayer: Kimetsu no Yaiba - Tren infinito',
-            price: 299.99, 
-        },
-    ]
+export const getBooksByUserApi = async (auth) => {    
+    try {
+        const url = `${ API_URL }/user/${ auth.idUser }/book`
+        const request = await fetch(url);
+        const result = request.json();
+        return result;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }

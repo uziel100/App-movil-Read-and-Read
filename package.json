@@ -13,6 +13,7 @@
     "@react-native-masked-view/masked-view": "^0.2.4",
     "@react-navigation/material-bottom-tabs": "^5.3.15",
     "@react-navigation/native": "^5.9.4",
+    "@react-navigation/stack": "^5.14.5",
     "expo": "~41.0.1",
     "expo-application": "^3.1.2",
     "expo-auth-session": "~3.2.3",
@@ -33,8 +34,8 @@
     "react-native-toast-message": "^1.4.9",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
-    "yup": "^0.32.9",
-    "react-native-webview": "11.2.3"
+    "react-native-webview": "11.2.3",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

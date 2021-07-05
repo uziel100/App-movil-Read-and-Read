@@ -5,9 +5,8 @@ import SkeletonWishList from "../Skeleton/SkeletonWishList";
 import EmptyWishlist from "./EmptyWishlist";
 
 export default function ListWishList({ wishlist }) {
-    
     return (
-        <View>
+        <View>            
             {!wishlist 
                 ? (<SkeletonWishList />) 
                 : wishlist.length === 0 

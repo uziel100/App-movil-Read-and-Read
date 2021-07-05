@@ -17,7 +17,7 @@ export default function App() {
             if (token) {
                 setAuth({
                     token,
-                    idUser: jwtDecode(token)._id,
+                    idUser: jwtDecode(token).user._id,
                 });
             } else {
                 setAuth(null); 
@@ -54,8 +54,7 @@ export default function App() {
     return (
         <AuthContext.Provider value={ authData } >
             <PaperProvider style={styles.container}>                            
-                {auth ? <AppNavigation /> : <AuthScreen />}
-                {/* <AppNavigation /> */}
+                {auth ? <AppNavigation /> : <AuthScreen />}                
             </PaperProvider>
             <Toast ref={(ref) => Toast.setRef(ref)} />
         </AuthContext.Provider>
