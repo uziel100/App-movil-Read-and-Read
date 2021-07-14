@@ -13,9 +13,7 @@ import BookItem from "../Book/BookItem";
 import useAuth from "../../hooks/useAuth";
 import { useFocusEffect } from "@react-navigation/native";
 import { sortArrayByDateAsc } from "../../utils/funtions";
-import Carousel from "react-native-snap-carousel";
 
-const width = Dimensions.get("window").width;
 
 export default function NewBooks() {
     const { auth } = useAuth();

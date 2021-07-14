@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
 import Home from "../screens/Home";
-import Account from "../screens/Account";
+import AccountStack from "./AccountStack";
 import colors from "../styles/colors";
 import Book from "../screens/Book";
 import WishList from "../screens/WishList";
@@ -45,7 +45,7 @@ export default function TabsNavigation() {
             />
             <Tab.Screen
                 name="account"
-                component={Account}
+                component={AccountStack}
                 options={{
                     title: "Cuenta",
                 }}

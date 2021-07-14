@@ -35,7 +35,8 @@
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
     "react-native-webview": "11.2.3",
-    "yup": "^0.32.9"
+    "yup": "^0.32.9",
+    "expo-linear-gradient": "~9.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

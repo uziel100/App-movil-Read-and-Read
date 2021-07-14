@@ -18,8 +18,8 @@ export default function SearchBarCustom() {
                 borderColor: "#fff",
                 shadowOpacity: 0,
             }}
-            iconColor="#397f77"
-            style={{ backgroundColor: "#6e9c94" }}
+            iconColor="#134E5E"
+            style={{ backgroundColor: "#c2e4ca" }}
         />
     );
 }

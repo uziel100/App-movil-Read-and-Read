@@ -18,7 +18,7 @@ export default function ViewBook({ route: { params } }) {
         <View style={styles.container}>
             <WebView
                 source={{
-                    uri: `https://docs.google.com/viewer?url=${ URL_FILES }/${ fileName }`,
+                    uri: `https://docs.google.com/viewer?url=${ URL_FILES }/${ fileName }&embedded=true&chrome=false`,
                 }}
             />
         </View>
