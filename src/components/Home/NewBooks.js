@@ -3,8 +3,6 @@ import {
     View,
     Text,
     StyleSheet,
-    Dimensions,
-    TouchableWithoutFeedback,
     ScrollView,
 } from "react-native";
 import { Subheading } from "react-native-paper";
@@ -12,7 +10,6 @@ import { getBooksByUserApi } from "../../api/books";
 import BookItem from "../Book/BookItem";
 import useAuth from "../../hooks/useAuth";
 import { useFocusEffect } from "@react-navigation/native";
-import { sortArrayByDateAsc } from "../../utils/funtions";
 
 
 export default function NewBooks() {
@@ -21,10 +18,10 @@ export default function NewBooks() {
 
     useFocusEffect(
         useCallback(() => {
+            setBooks( null );
             (async () => {
-                const data = await getBooksByUserApi(auth);
-                const sortBooks = sortArrayByDateAsc(data.books);
-                setBooks(sortBooks);
+                const { books } = await getBooksByUserApi(auth);                
+                setBooks( books );
             })();
         }, [])
     );

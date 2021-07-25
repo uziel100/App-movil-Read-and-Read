@@ -30,6 +30,9 @@ export default function App() {
         setAuth({
             token: user.token,
             idUser: user.user._id,
+            username: user.user.username,
+            photo: user.user.photo,
+            email: user.user.email
         });
     };
 

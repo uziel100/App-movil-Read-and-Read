@@ -1,18 +1,17 @@
 import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 
-export default function UserAvatar(props) {
-    const { user } = props;    
+export default function UserAvatar({ user, urlPhoto }) {
 
     return (
         <View style={ styles.container }>
             <Image
                 source={{
-                    uri: "https://i.pravatar.cc/300",
+                    uri: `${ urlPhoto }`,
                 }}
                 style={ styles.avatar }
             />
-            <Text style={ styles.textName }>Uziel Meliton Hernandez</Text>
+            <Text style={ styles.textName }>{ user }</Text>
         </View>
     );
 }

@@ -5,8 +5,11 @@ import RecentlyViewedBooks from "../components/Home/RecentlyViewedBooks";
 import SearchBarCustom from "../components/SearchBarCustom";
 import StatusBarCustom from "../components/StatusBarCustom";
 import { LinearGradient } from "expo-linear-gradient";
+import useAuth from "../hooks/useAuth";
 
 export default function Home() {
+    const { auth } = useAuth();
+
     return (
         <>
             <StatusBarCustom backgroundColor="#71B280" />
@@ -17,7 +20,7 @@ export default function Home() {
                 <SearchBarCustom />
                 <View style={styles.containerTitleWelcome}>
                     <Text style={styles.titleWelcome}>Bienvenid@</Text>
-                    <Text style={styles.titleNameUser}>Uziel Meliton</Text>
+                    <Text style={styles.titleNameUser}>{ auth.username }</Text>
                 </View>
             </LinearGradient>
             <ScrollView style={styles.container}>

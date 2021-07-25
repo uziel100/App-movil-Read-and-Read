@@ -50,7 +50,10 @@ export default function Account() {
 
     return (        
         <ScrollView style={ styles.container }>
-            <UserAvatar />
+            <UserAvatar 
+                user={ auth.email } 
+                urlPhoto={ auth.photo } 
+            />
             <Menu />                    
         </ScrollView>
     );
