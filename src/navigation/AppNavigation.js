@@ -1,25 +1,52 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+    createStackNavigator,
+    HeaderBackButton,
+} from "@react-navigation/stack";
 import ViewBook from "../screens/Book/ViewBook";
 import TabsNavigation from "./TabsNavigation";
-const Tab = createMaterialBottomTabNavigator();
-
+import * as ScreenOrientation from "expo-screen-orientation";
+import colors from "../styles/colors";
 const Stack = createStackNavigator();
 
 export default function AppNavigation() {
+    async function changeScreenOrientation(navigation) {
+        navigation.goBack();
+        await ScreenOrientation.lockAsync(
+            ScreenOrientation.OrientationLock.DEFAULT
+        );
+    }
+
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="tabs-app">
+            <Stack.Navigator 
+                initialRouteName="tabs-app"
+                screenOptions={{
+                    headerTintColor: colors.fontLight,
+                    headerStyle: { backgroundColor: colors.accent }                   
+                }}
+            >
                 <Stack.Screen
                     options={{ headerShown: false }}
                     name="tabs-app"
                     component={TabsNavigation}
                 />
-                <Stack.Screen name="view-book" component={ViewBook} />
+                <Stack.Screen
+                    name="view-book"
+                    component={ViewBook}
+                    options={({ navigation }) => ({
+                        headerLeft: (props) => (
+                            <HeaderBackButton
+                                {...props}
+                                onPress={async () => {
+                                    await changeScreenOrientation(navigation);
+                                }}
+                            />
+                        ),
+                    })}                  
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
 }
-

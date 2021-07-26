@@ -15,9 +15,13 @@ export default function App() {
         (async () => {
             const token = await getTokenApi();
             if (token) {
+                const decoded = jwtDecode(token);
                 setAuth({
                     token,
-                    idUser: jwtDecode(token).user._id,
+                    idUser: decoded.user._id,                    
+                    username: decoded.user.username,
+                    photo: decoded.user.photo,
+                    email: decoded.user.email
                 });
             } else {
                 setAuth(null); 

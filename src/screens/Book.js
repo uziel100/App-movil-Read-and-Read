@@ -1,18 +1,24 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import YouBooks from "../components/YourBooks/YourBooks";
+import StatusBarCustom from '../components/StatusBarCustom'
+import colors from "../styles/colors";
 
 export default function Book() {
        
     return (
-        <View style={styles.container}>
-            <Text>Here, babel will put his module</Text>
-        </View>
+        <>
+            <StatusBarCustom backgroundColor={ colors.accent } />
+            <View style={styles.container}>            
+                <YouBooks />
+            </View>
+        </>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 30   
+    container: {        
+        padding: 10,
+        flex: 1
     },
 });

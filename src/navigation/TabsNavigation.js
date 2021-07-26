@@ -8,6 +8,7 @@ import colors from "../styles/colors";
 import Book from "../screens/Book";
 import WishList from "../screens/WishList";
 
+
 const Tab = createMaterialBottomTabNavigator();
 
 export default function TabsNavigation() {

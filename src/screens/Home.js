@@ -6,16 +6,17 @@ import SearchBarCustom from "../components/SearchBarCustom";
 import StatusBarCustom from "../components/StatusBarCustom";
 import { LinearGradient } from "expo-linear-gradient";
 import useAuth from "../hooks/useAuth";
+import colors from "../styles/colors";
 
 export default function Home() {
     const { auth } = useAuth();
 
     return (
         <>
-            <StatusBarCustom backgroundColor="#71B280" />
+            <StatusBarCustom backgroundColor={ colors.accent } />
             <LinearGradient
                 style={styles.containerBackground}
-                colors={["#71B280", "#134E5E"]}
+                colors={[ colors.accent , colors.primary]}
             >
                 <SearchBarCustom />
                 <View style={styles.containerTitleWelcome}>

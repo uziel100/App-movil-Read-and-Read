@@ -5,9 +5,13 @@ import { StyleSheet, View } from "react-native";
 import useAuth from "../../hooks/useAuth";
 
 export default function Menu() {
+    
     const { logout } = useAuth();
     const navigation = useNavigation();
 
+    const logoutApp = () => {
+        logout();        
+    }
     return (
         <View style={ { marginBottom: '40%' } }>
             <List.Section>
@@ -43,7 +47,7 @@ export default function Menu() {
                 />                
             </List.Section>
             <View style={ styles.containerLogout } >
-                <Button onPress={logout} style={ styles.btnLogout } mode="text">Cerrar sesión</Button>
+                <Button onPress={logoutApp} style={ styles.btnLogout } mode="text">Cerrar sesión</Button>
                 <Text style={ styles.versionApp } >Read&Read v1.0.0</Text>    
             </View>   
         </View>

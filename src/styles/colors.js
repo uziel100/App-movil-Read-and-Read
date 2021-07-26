@@ -3,7 +3,7 @@ const colors = {
     secondary: '#48D77A',
     accent: '#2F80ED', 
     bgNavigation: '#fff',
-    activeColorNavigation: '#397f77',
+    activeColorNavigation: '#2F80ED',
     inctiveColorNavigation: '#555',
 
     dark: '#000',

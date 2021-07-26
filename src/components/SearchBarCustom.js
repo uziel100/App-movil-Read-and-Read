@@ -19,7 +19,7 @@ export default function SearchBarCustom() {
                 shadowOpacity: 0,
             }}
             iconColor="#134E5E"
-            style={{ backgroundColor: "#c2e4ca" }}
+            style={{ backgroundColor: "#fff" }}
         />
     );
 }
