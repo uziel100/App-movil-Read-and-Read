@@ -8,6 +8,7 @@ import ViewBook from "../screens/Book/ViewBook";
 import TabsNavigation from "./TabsNavigation";
 import * as ScreenOrientation from "expo-screen-orientation";
 import colors from "../styles/colors";
+import AboutApp from "../screens/Account/AboutApp";
 const Stack = createStackNavigator();
 
 export default function AppNavigation() {
@@ -45,6 +46,11 @@ export default function AppNavigation() {
                             />
                         ),
                     })}                  
+                />
+                <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="about-app"
+                    component={AboutApp}
                 />
             </Stack.Navigator>
         </NavigationContainer>

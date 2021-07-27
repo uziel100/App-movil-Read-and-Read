@@ -1,35 +1,69 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { Subheading } from 'react-native-paper'
-import BookItem from '../Book/BookItem'
+import React, { useCallback, useState } from "react";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { Subheading } from "react-native-paper";
+import { getRecentlyReadBooksByUserApi } from "../../api/books";
+import BookItem from "../Book/BookItem";
+import useAuth from "../../hooks/useAuth";
+import { useFocusEffect } from "@react-navigation/native";
 
-export default function RecentlyViewedBooks() {
+export default function NewBooks() {
+    const { auth } = useAuth();
+    const [books, setBooks] = useState(null);
+
+    useFocusEffect(
+        useCallback(() => {
+            setBooks(null);
+            (async () => {
+                const { books } = await getRecentlyReadBooksByUserApi(auth);
+                setBooks(books);
+            })();
+        }, [])
+    );
+
     return (
-        <View style={ styles.container } >
-            <Subheading style={ styles.titleSection }>Agregados recientemente</Subheading> 
-            <View style={ styles.containerFlex } >
-                <BookItem />
-                <BookItem />
-                <BookItem />
-                <BookItem />                        
+        <View style={styles.container}>
+            {!books?.length || (
+                <Subheading style={styles.titleSection}>
+                    Leidos recientemente
+                </Subheading>
+            )}
+
+            <View style={styles.containerFlex}>
+                {!books ? (
+                    <Text>Cargando...</Text>
+                ) : books.length === 0 ? (
+                    <></>
+                ) : (
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    >
+                        {books.map((item) => (
+                            <BookItem
+                                key={item._id}
+                                imgUrl={item.book.imgUrl}
+                                title={item.book.title}
+                                fileName={item.book.fileName}
+                            />
+                        ))}
+                    </ScrollView>
+                )}
             </View>
         </View>
-    )
+    );
 }
 
-const styles = StyleSheet.create({    
-    container:{        
-        paddingBottom: 30
+const styles = StyleSheet.create({
+    container: {
+        marginVertical: 10,
     },
-    containerFlex: {        
-        flexDirection: 'row',        
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',        
+    containerFlex: {
+        flexDirection: "row",
     },
-    titleSection:{
+
+    titleSection: {
+        color: "#555",
         marginVertical: 10,
         fontSize: 14,
-        color: '#555'
-    }
-})
-
+    },
+});

@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { setTokenApi, getTokenApi, delTokenApi } from "./src/api/token";
+import { getUsernameApi, setUsernameApi } from "./src/api/username";
 import jwtDecode from "jwt-decode";
 import Toast from 'react-native-toast-message';
 import AuthContext from "./src/context/AuthContext";
@@ -16,10 +17,11 @@ export default function App() {
             const token = await getTokenApi();
             if (token) {
                 const decoded = jwtDecode(token);
+                const username = getUsernameApi();
                 setAuth({
                     token,
                     idUser: decoded.user._id,                    
-                    username: decoded.user.username,
+                    username,
                     photo: decoded.user.photo,
                     email: decoded.user.email
                 });
@@ -31,6 +33,7 @@ export default function App() {
 
     const login = (user) => {
         setTokenApi(user.token);
+        setUsernameApi( user.user?.username || '' );
         setAuth({
             token: user.token,
             idUser: user.user._id,

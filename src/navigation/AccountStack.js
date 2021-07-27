@@ -3,7 +3,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Account from "../screens/Account/Account";
 import ChangeName from "../screens/Account/ChangeName";
 import ChangeUsername from "../screens/Account/ChangeUsername";
-import AcercaDeApp from "../screens/Account/AcercaDeApp";
 import colors from "../styles/colors";
 
 const Stack = createStackNavigator();
@@ -38,14 +37,7 @@ export default function AccountStack() {
                 options={{
                     title: "Cambiar username",
                 }}
-            />
-            <Stack.Screen
-                name="Acerca-De-App"
-                component={AcercaDeApp}
-                options={{
-                    title: "Acerca de la aplicacion",
-                }}
-            />
+            />            
         </Stack.Navigator>
     );
 }

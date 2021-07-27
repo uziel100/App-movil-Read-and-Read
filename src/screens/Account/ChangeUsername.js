@@ -9,6 +9,7 @@ import { getUsernameApi, updateUsernameApi } from "../../api/user";
 import useAuth from "../../hooks/useAuth";
 import colors from "../../styles/colors";
 import { formStyle } from "../../styles";
+import { setUsernameApi } from "../../api/username";
 
 export default function ChangeUsername() {
     const { auth } = useAuth();
@@ -32,6 +33,7 @@ export default function ChangeUsername() {
             try {
                 const response = await updateUsernameApi(auth, formData);
                 if (!response.status) throw "El nombre de usuario ya existe";
+                await setUsernameApi( formData.username )
                 navigation.goBack();
             } catch (error) {                
                 Toast.show({

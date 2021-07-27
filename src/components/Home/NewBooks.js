@@ -20,8 +20,8 @@ export default function NewBooks() {
         useCallback(() => {
             setBooks( null );
             (async () => {
-                const { books } = await getBooksByUserApi(auth);                
-                setBooks( books );
+                const data = await getBooksByUserApi(auth);  
+                setBooks( data.books );
             })();
         }, [])
     );
@@ -33,9 +33,9 @@ export default function NewBooks() {
             </Subheading>
             <View style={styles.containerFlex}>
                 {!books ? (
-                    <Text>cargando...</Text>
-                ) : !books?.length ? (
-                    <Text>NO tienes libros</Text>
+                    <Text>Cargando...</Text>
+                ) : books.length === 0 ? (
+                    <Text>No tienes ningún libro</Text>
                 ) : (
                     <ScrollView
                         horizontal

@@ -1,25 +1,65 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import {
+    StyleSheet,
+    View,
+    Platform,
+    TouchableWithoutFeedback,
+} from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import * as Yup from "yup";
 import Toast from "react-native-toast-message";
 import StatusBar from "../../components/StatusBarCustom";
+import Gender from "../../components/Account/Gender"
 import { getMeApi, updateUserApi } from "../../api/user";
 import useAuth from "../../hooks/useAuth";
 import colors from "../../styles/colors";
 import { formStyle } from "../../styles";
+
+
 export default function ChangeName() {
     const { auth } = useAuth();
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
 
+    const [date, setDate] = useState(new Date());
+    const [mode, setMode] = useState("date");
+    const [show, setShow] = useState(false);
+    const [gender, setGender] = useState( null )
+
+    const onChange = async (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        const formatDate = currentDate.toISOString().split("T")[0];        
+        setShow(Platform.OS === "ios");
+        selectedDate && setDate(currentDate);        
+        selectedDate && await formik.setFieldValue("birthDate", customDateInit(formatDate, -1) );
+    };
+
+    const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+    };
+
+    const showDatepicker = () => {
+        showMode("date");
+    };
+
+    const customDateInit = (date, flag = 1) => {
+        const splitDate = date.split('-');
+        const dayNext = String( Number( splitDate[2] ) + flag );
+        splitDate[2] = dayNext;
+        
+        return splitDate.join('-')
+    }
+
     useFocusEffect(
         useCallback(() => {
             (async () => {
-                const response = await getMeApi(auth);                
+                const response = await getMeApi(auth); 
+                  
                 await formik.setFieldValue("name", response.user.name);
                 await formik.setFieldValue("lastName", response.user.lastName);
                 await formik.setFieldValue("address", response.user.address);
@@ -27,8 +67,10 @@ export default function ChangeName() {
                 await formik.setFieldValue(
                     "birthDate",
                     response.user.birthDate
-                );
-                await formik.setFieldValue("gender", response.user.gender);
+                );                                              
+                const currentDate = response?.user?.birthDate? new Date( customDateInit(response.user.birthDate) ) : date;                        
+                setDate(currentDate)
+                setGender( response?.user?.gender || gender )                                
             })();
         }, [])
     );
@@ -37,10 +79,9 @@ export default function ChangeName() {
         initialValues: initialValues(),
         validationSchema: Yup.object(validationSchema()),
         onSubmit: async (formData) => {
-            setLoading(true);            
-            try {
-                const data = await updateUserApi(auth, formData);
-                console.log(data)
+            setLoading(true);
+            try {                
+                const data = await updateUserApi(auth, { ...formData, gender });
                 navigation.goBack();
             } catch (error) {
                 Toast.show({
@@ -62,6 +103,16 @@ export default function ChangeName() {
                 barStyle="light-content"
             />
             <KeyboardAwareScrollView style={styles.container} extraHeight={25}>
+                {show && (
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        display="default"
+                        onChange={onChange}
+                        maximumDate={new Date()}
+                    />
+                )}
                 <TextInput
                     label="Nombre"
                     style={formStyle.input}
@@ -94,27 +145,24 @@ export default function ChangeName() {
                     value={formik.values.phone}
                     error={formik.errors.phone}
                 />
-                <TextInput
-                    label="Fecha de nacimiento"
-                    style={formStyle.input}
-                    onChangeText={(text) =>
-                        formik.setFieldValue("birthDate", text)
-                    }
-                    value={formik.values.birthDate}
-                    error={formik.errors.birthDate}
-                />
-                <TextInput
-                    label="Género"
-                    style={formStyle.input}
-                    onChangeText={(text) =>
-                        formik.setFieldValue("gender", text)
-                    }
-                    value={formik.values.gender}
-                    error={formik.errors.gender}
-                />
+                <TouchableWithoutFeedback
+                    onPress={ showDatepicker }
+                >
+                    <View>
+                        <TextInput
+                            label="Fecha de nacimiento"
+                            style={formStyle.input}
+                            value={formik.values.birthDate}
+                            error={formik.errors.birthDate}
+                            editable={false}
+                        />
+                    </View>
+                </TouchableWithoutFeedback>                
+                <Gender gender={ gender } setGender={ setGender }/>            
+                
                 <Button
                     mode="contained"
-                    style={[formStyle.btnAccent, styles.btn]}
+                    style={[formStyle.btnPrimary, styles.btn]}
                     onPress={formik.handleSubmit}
                     disabled={loading}
                     loading={loading}
@@ -132,8 +180,7 @@ function initialValues() {
         lastName: "",
         address: "",
         phone: "",
-        birthDate: "",
-        gender: "",
+        birthDate: ""        
     };
 }
 
@@ -143,8 +190,7 @@ function validationSchema() {
         lastName: Yup.string().required(true),
         address: Yup.string().required(true),
         phone: Yup.string().required(true),
-        birthDate: Yup.string().required(true),
-        gender: Yup.string().required(true),
+        birthDate: Yup.string().required(true)        
     };
 }
 
@@ -154,5 +200,6 @@ const styles = StyleSheet.create({
     },
     btn: {
         marginBottom: 80,
+        marginTop: 90,        
     },
 });

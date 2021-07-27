@@ -28,14 +28,14 @@ export default function ListYourFavoritesBooks() {
         return <ScreenLoading />  
 
     return (
-        <>
+        <View style={styles.containerRoot}>
             {!products || size(products) === 0 ? (
                 <Text>No hay libros en favoritos</Text>
             ) : (
                 <View style={styles.container}>
                     {map(products, (product) => (
                         <BookItem
-                            key={product.book._id}
+                            key={product._id}
                             imgUrl={product.book.imgUrl}
                             title={product.book.title}
                             fileName={product.book.fileName}
@@ -45,11 +45,16 @@ export default function ListYourFavoritesBooks() {
                     ))}
                 </View>
             )}
-        </>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    containerRoot: {
+        alignContent: "center",
+        alignItems: "center",
+        marginBottom: 150,
+    },
     container: {
         flexDirection: "row",
         flexWrap: "wrap",

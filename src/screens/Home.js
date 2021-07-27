@@ -1,15 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
 import NewBooks from "../components/Home/NewBooks";
 import RecentlyViewedBooks from "../components/Home/RecentlyViewedBooks";
-import SearchBarCustom from "../components/SearchBarCustom";
 import StatusBarCustom from "../components/StatusBarCustom";
 import { LinearGradient } from "expo-linear-gradient";
-import useAuth from "../hooks/useAuth";
+import Search from "../components/Search";
 import colors from "../styles/colors";
+import { getUsernameApi } from "../api/username";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Home() {
-    const { auth } = useAuth();
+    
+    const [username, setUsername] = useState("")
+
+    useFocusEffect(
+        useCallback( () => {
+            ( async () =>  {
+                const username = await getUsernameApi();                
+                setUsername(username)
+            })()
+        }, [])
+    );
+
 
     return (
         <>
@@ -18,15 +30,15 @@ export default function Home() {
                 style={styles.containerBackground}
                 colors={[ colors.accent , colors.primary]}
             >
-                <SearchBarCustom />
+                <Search />
                 <View style={styles.containerTitleWelcome}>
                     <Text style={styles.titleWelcome}>Bienvenid@</Text>
-                    <Text style={styles.titleNameUser}>{ auth.username }</Text>
+                    <Text style={styles.titleNameUser}>{ username }</Text>
                 </View>
             </LinearGradient>
             <ScrollView style={styles.container}>
+                <RecentlyViewedBooks />
                 <NewBooks />
-                {/* <RecentlyViewedBooks /> */}
             </ScrollView>
         </>
     );

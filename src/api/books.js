@@ -39,6 +39,25 @@ export const getAllBooksByUserApi = async (auth) => {
     }
 }
 
+export const getRecentlyReadBooksByUserApi = async (auth) => {    
+    try {
+        const url = `${ API_URL }/user-book/${ auth.idUser }/recentlyViewed`        
+        const params = {
+            method: 'GET',
+            headers:{
+                "Content-Type": "application/json",
+                "token": `Bearer ${ auth.token }`
+            }
+        }
+        const request = await fetch(url, params);
+        const result = request.json();
+        return result;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
 export const getFavoritesBooksByUserApi = async (auth) => {    
     try {
         const url = `${API_URL}/user-favorite/${ auth.idUser }`;

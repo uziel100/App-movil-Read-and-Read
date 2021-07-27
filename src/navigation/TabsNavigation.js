@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
-import Home from "../screens/Home";
+import BookStack from "./BookStack";
 import AccountStack from "./AccountStack";
 import colors from "../styles/colors";
 import Book from "../screens/Book";
@@ -25,7 +25,7 @@ export default function TabsNavigation() {
         >
             <Tab.Screen
                 name="home"
-                component={Home}
+                component={BookStack}
                 options={{
                     title: "Inicio",
                 }}
