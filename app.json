@@ -8,7 +8,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1667D3"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,6 +21,8 @@
       "requireFullScreen": true
     },
     "android": {
+      "package": "com.uziel.ReadAndRead",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -29,6 +31,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "readandread"
-  }  
+    "scheme": "readandread",
+    "description": ""
+  }
 }

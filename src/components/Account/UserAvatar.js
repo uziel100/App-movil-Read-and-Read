@@ -1,12 +1,14 @@
 import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import defaultAvatar from '../../../assets/default-avatar.png'
+import { URL_IMG_AVATAR } from '../../utils/constants'
+
 export default function UserAvatar({ user, urlPhoto }) {
-    console.log('photo: ',urlPhoto )
 
     const setAvatar = (urlPhoto) => {
+        const urlImg = urlPhoto.startsWith('https://') ? urlPhoto : `${ URL_IMG_AVATAR }/${ urlPhoto }` ;
         const dataImg = {
-            uri: `${ urlPhoto }`
+            uri: urlImg
         }
         const image = !urlPhoto ? defaultAvatar : dataImg
         return image
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
     avatar:{
         width: 120,
         height: 120,
-        resizeMode: 'contain',
+        resizeMode: 'cover',
         borderRadius: 120,
     },
     textName: {

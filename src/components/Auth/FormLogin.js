@@ -17,7 +17,7 @@ export default function FormLogin() {
     const [showPassword, setShowPassword] = useState(true);
     const [loading, setLoading] = useState(false);
     const [googleLoading, setGoogleLoading] = useState(false);
-    const { login } = useAuth();
+    const { login } = useAuth();    
 
     const formik = useFormik({
         initialValues: initialValues(),
@@ -42,7 +42,7 @@ export default function FormLogin() {
     });
 
     const [requestToken, responseToken, promptAsyncToken] =
-        Google.useIdTokenAuthRequest(CONFIG_GOOGLE_SIGN_IN);
+        Google.useIdTokenAuthRequest( CONFIG_GOOGLE_SIGN_IN );
 
     const handleLoginWithGoogle = async () => {
         setGoogleLoading(true);
@@ -56,7 +56,6 @@ export default function FormLogin() {
                 const response = await loginWithGoogleApi({
                     idtoken: id_token,
                 });
-                console.log(response);
                 if (!response.status) throw response.message;
                 login(response);
             } else {
