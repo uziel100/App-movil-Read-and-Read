@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { View,StyleSheet, ScrollView, Dimensions } from "react-native";
 import { searchBooksByUserApi } from "../api/search";
 import { size, map } from "lodash";
 import useAuth from "../hooks/useAuth";
 import BookItem from "../components/Book/BookItem";
+import { useTheme, Text } from "react-native-paper";
 
 const width = Dimensions.get("window").width / 2 - 30;
 const height = Dimensions.get("window").width / 2 + 20;
@@ -12,6 +13,8 @@ export default function Search({ route: { params } }) {
     const { query } = params;
     const { auth } = useAuth();
     const [books, setBooks] = useState(null);
+
+    const paperTheme = useTheme();
 
     useEffect(() => {
         (async () => {
@@ -22,7 +25,7 @@ export default function Search({ route: { params } }) {
     }, [query]);
 
     return (
-        <View style={styles.container}>
+        <View style={ {...styles.container, backgroundColor: paperTheme.colors.surface }}>
             <View style={styles.flex}>
                 <Text style={styles.title}>Buscaste: </Text>
                 <Text style={styles.query}>{query}</Text>
@@ -55,6 +58,7 @@ export default function Search({ route: { params } }) {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         padding: 20,
     },
     flex: {

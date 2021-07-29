@@ -1,11 +1,15 @@
 import React from "react";
 import { View, Text } from "react-native";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
-export default function SkeletonWishList() {
+import useAuth from "../../hooks/useAuth";
+
+export default function SkeletonWishList() {    
+    const { theme } = useAuth()
+    
     return (
         <>
             <View style={{ marginBottom: 10 }}>
-                <SkeletonPlaceholder speed={0}>
+                <SkeletonPlaceholder backgroundColor={ theme === 'dark'? '#222': '#e1e8ee' } speed={0}>
                     <SkeletonPlaceholder.Item
                         flexDirection="row"
                         alignItems="center"
@@ -36,7 +40,7 @@ export default function SkeletonWishList() {
                         </SkeletonPlaceholder.Item>
                     </SkeletonPlaceholder.Item>
                 </SkeletonPlaceholder>
-                <SkeletonPlaceholder speed={0}>
+                <SkeletonPlaceholder backgroundColor={ theme === 'dark'? '#222': '#e1e8ee' } speed={0}>
                     <SkeletonPlaceholder.Item
                         flexDirection="row"
                         alignItems="center"
@@ -69,7 +73,7 @@ export default function SkeletonWishList() {
                 </SkeletonPlaceholder>
             </View>
             <View style={{ marginBottom: 10 }}>
-                <SkeletonPlaceholder speed={0}>
+            <SkeletonPlaceholder backgroundColor={ theme === 'dark'? '#222': '#e1e8ee' } speed={0}>
                     <SkeletonPlaceholder.Item
                         flexDirection="row"
                         alignItems="center"
@@ -100,7 +104,7 @@ export default function SkeletonWishList() {
                         </SkeletonPlaceholder.Item>
                     </SkeletonPlaceholder.Item>
                 </SkeletonPlaceholder>
-                <SkeletonPlaceholder speed={0}>
+                <SkeletonPlaceholder backgroundColor={ theme === 'dark'? '#222': '#e1e8ee' } speed={0}>
                     <SkeletonPlaceholder.Item
                         flexDirection="row"
                         alignItems="center"
@@ -133,7 +137,7 @@ export default function SkeletonWishList() {
                 </SkeletonPlaceholder>
             </View>
             <View style={{ marginBottom: 10 }}>
-                <SkeletonPlaceholder speed={0}>
+            <SkeletonPlaceholder backgroundColor={ theme === 'dark'? '#222': '#e1e8ee' } speed={0}>
                     <SkeletonPlaceholder.Item
                         flexDirection="row"
                         alignItems="center"
@@ -164,7 +168,7 @@ export default function SkeletonWishList() {
                         </SkeletonPlaceholder.Item>
                     </SkeletonPlaceholder.Item>
                 </SkeletonPlaceholder>
-                <SkeletonPlaceholder speed={0}>
+                <SkeletonPlaceholder backgroundColor={ theme === 'dark'? '#222': '#e1e8ee' } speed={0}>
                     <SkeletonPlaceholder.Item
                         flexDirection="row"
                         alignItems="center"

@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
+import { useTheme } from "react-native-paper";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
 import BookStack from "./BookStack";
@@ -11,10 +12,14 @@ import WishList from "../screens/WishList";
 
 const Tab = createMaterialBottomTabNavigator();
 
+
 export default function TabsNavigation() {
+    
+    const paperTheme = useTheme();
+    
     return (
         <Tab.Navigator
-            barStyle={styles.navigation}
+            barStyle={{ backgroundColor: paperTheme.colors.navegation }}
             activeColor={colors.activeColorNavigation}
             inactiveColor={colors.inctiveColorNavigation}
             screenOptions={({ route }) => ({

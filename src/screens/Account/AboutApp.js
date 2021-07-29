@@ -1,12 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import colors from "../../styles/colors";
-import { IconButton } from "react-native-paper";
+import { IconButton, useTheme, Text } from "react-native-paper";
 import { map } from "lodash";
 
 import * as Linking from "expo-linking";
 import { SITE_WEB } from "../../utils/constants";
+import useAuth from "../../hooks/useAuth";
 
 const links = [
     {
@@ -31,8 +32,11 @@ export default function AboutApp() {
         Linking.openURL(`${SITE_WEB}${path}`);
     };
 
+    const { theme } = useAuth();
+    const paperTheme = useTheme();
+
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: paperTheme.colors.surface }}>
             <LinearGradient
                 style={styles.containerBackground}
                 colors={[colors.accent, "#7559cb"]}
@@ -48,7 +52,7 @@ export default function AboutApp() {
                     la lectura!
                 </Text>
             </LinearGradient>
-            <View style={styles.containerBottom}>
+            <View style={{...styles.containerBottom, backgroundColor: theme === 'dark'? '#18191a': '#fff' }}>
                 {map(links, (link) => (
                     <TouchableOpacity
                         key={link.id}
@@ -58,7 +62,7 @@ export default function AboutApp() {
                             <Text>{link.title}</Text>
                             <IconButton
                                 icon="arrow-right"
-                                color="#000"
+                                color={ theme === 'dark'? '#eee': '#000' }
                                 size={18}
                             />
                         </View>
@@ -84,8 +88,7 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 16,
     },
-    containerBottom: {
-        backgroundColor: "#fff",
+    containerBottom: {        
         flex: 3,
         paddingHorizontal: 30,
         justifyContent: "flex-end",

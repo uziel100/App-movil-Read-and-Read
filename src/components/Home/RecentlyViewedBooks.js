@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { Subheading } from "react-native-paper";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { Subheading, Text } from "react-native-paper";
 import { getRecentlyReadBooksByUserApi } from "../../api/books";
 import BookItem from "../Book/BookItem";
 import useAuth from "../../hooks/useAuth";

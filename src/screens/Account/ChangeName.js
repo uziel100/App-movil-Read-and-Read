@@ -5,7 +5,7 @@ import {
     Platform,
     TouchableWithoutFeedback,
 } from "react-native";
-import { TextInput, Button } from "react-native-paper";
+import { TextInput, Button, useTheme } from "react-native-paper";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -13,29 +13,33 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import * as Yup from "yup";
 import Toast from "react-native-toast-message";
 import StatusBar from "../../components/StatusBarCustom";
-import Gender from "../../components/Account/Gender"
+import Gender from "../../components/Account/Gender";
 import { getMeApi, updateUserApi } from "../../api/user";
 import useAuth from "../../hooks/useAuth";
 import colors from "../../styles/colors";
 import { formStyle } from "../../styles";
 
-
 export default function ChangeName() {
     const { auth } = useAuth();
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
+    const paperTheme = useTheme();
 
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState("date");
     const [show, setShow] = useState(false);
-    const [gender, setGender] = useState( null )
+    const [gender, setGender] = useState(null);
 
     const onChange = async (event, selectedDate) => {
         const currentDate = selectedDate || date;
-        const formatDate = currentDate.toISOString().split("T")[0];        
+        const formatDate = currentDate.toISOString().split("T")[0];
         setShow(Platform.OS === "ios");
-        selectedDate && setDate(currentDate);        
-        selectedDate && await formik.setFieldValue("birthDate", customDateInit(formatDate, -1) );
+        selectedDate && setDate(currentDate);
+        selectedDate &&
+            (await formik.setFieldValue(
+                "birthDate",
+                customDateInit(formatDate, -1)
+            ));
     };
 
     const showMode = (currentMode) => {
@@ -48,18 +52,18 @@ export default function ChangeName() {
     };
 
     const customDateInit = (date, flag = 1) => {
-        const splitDate = date.split('-');
-        const dayNext = String( Number( splitDate[2] ) + flag );
+        const splitDate = date.split("-");
+        const dayNext = String(Number(splitDate[2]) + flag);
         splitDate[2] = dayNext;
-        
-        return splitDate.join('-')
-    }
+
+        return splitDate.join("-");
+    };
 
     useFocusEffect(
         useCallback(() => {
             (async () => {
-                const response = await getMeApi(auth); 
-                  
+                const response = await getMeApi(auth);
+
                 await formik.setFieldValue("name", response.user.name);
                 await formik.setFieldValue("lastName", response.user.lastName);
                 await formik.setFieldValue("address", response.user.address);
@@ -67,10 +71,12 @@ export default function ChangeName() {
                 await formik.setFieldValue(
                     "birthDate",
                     response.user.birthDate
-                );                                              
-                const currentDate = response?.user?.birthDate? new Date( customDateInit(response.user.birthDate) ) : date;                        
-                setDate(currentDate)
-                setGender( response?.user?.gender || gender )                                
+                );
+                const currentDate = response?.user?.birthDate
+                    ? new Date(customDateInit(response.user.birthDate))
+                    : date;
+                setDate(currentDate);
+                setGender(response?.user?.gender || gender);
             })();
         }, [])
     );
@@ -80,7 +86,7 @@ export default function ChangeName() {
         validationSchema: Yup.object(validationSchema()),
         onSubmit: async (formData) => {
             setLoading(true);
-            try {                
+            try {
                 const data = await updateUserApi(auth, { ...formData, gender });
                 navigation.goBack();
             } catch (error) {
@@ -102,7 +108,13 @@ export default function ChangeName() {
                 backgroundColor={colors.bgDark}
                 barStyle="light-content"
             />
-            <KeyboardAwareScrollView style={styles.container} extraHeight={25}>
+            <KeyboardAwareScrollView
+                style={[
+                    styles.container,
+                    { backgroundColor: paperTheme.colors.surface },
+                ]}
+                extraHeight={25}
+            >
                 {show && (
                     <DateTimePicker
                         testID="dateTimePicker"
@@ -115,14 +127,20 @@ export default function ChangeName() {
                 )}
                 <TextInput
                     label="Nombre"
-                    style={formStyle.input}
+                    style={[
+                        formStyle.input,
+                        { backgroundColor: paperTheme.colors.input },
+                    ]}
                     onChangeText={(text) => formik.setFieldValue("name", text)}
                     value={formik.values.name}
                     error={formik.errors.name}
                 />
                 <TextInput
                     label="Apellidos"
-                    style={formStyle.input}
+                    style={[
+                        formStyle.input,
+                        { backgroundColor: paperTheme.colors.input },
+                    ]}
                     onChangeText={(text) =>
                         formik.setFieldValue("lastName", text)
                     }
@@ -131,7 +149,10 @@ export default function ChangeName() {
                 />
                 <TextInput
                     label="Dirección"
-                    style={formStyle.input}
+                    style={[
+                        formStyle.input,
+                        { backgroundColor: paperTheme.colors.input },
+                    ]}
                     onChangeText={(text) =>
                         formik.setFieldValue("address", text)
                     }
@@ -140,29 +161,33 @@ export default function ChangeName() {
                 />
                 <TextInput
                     label="Teléfono"
-                    style={formStyle.input}
+                    style={[
+                        formStyle.input,
+                        { backgroundColor: paperTheme.colors.input },
+                    ]}
                     onChangeText={(text) => formik.setFieldValue("phone", text)}
                     value={formik.values.phone}
                     error={formik.errors.phone}
                 />
-                <TouchableWithoutFeedback
-                    onPress={ showDatepicker }
-                >
+                <TouchableWithoutFeedback onPress={showDatepicker}>
                     <View>
                         <TextInput
                             label="Fecha de nacimiento"
-                            style={formStyle.input}
+                            style={[
+                                formStyle.input,
+                                { backgroundColor: paperTheme.colors.input },
+                            ]}
                             value={formik.values.birthDate}
                             error={formik.errors.birthDate}
                             editable={false}
                         />
                     </View>
-                </TouchableWithoutFeedback>                
-                <Gender gender={ gender } setGender={ setGender }/>            
-                
+                </TouchableWithoutFeedback>
+                <Gender gender={gender} setGender={setGender} />
+
                 <Button
                     mode="contained"
-                    style={[formStyle.btnPrimary, styles.btn]}
+                    style={[formStyle.btnAccent, styles.btn]}
                     onPress={formik.handleSubmit}
                     disabled={loading}
                     loading={loading}
@@ -180,7 +205,7 @@ function initialValues() {
         lastName: "",
         address: "",
         phone: "",
-        birthDate: ""        
+        birthDate: "",
     };
 }
 
@@ -190,7 +215,7 @@ function validationSchema() {
         lastName: Yup.string().required(true),
         address: Yup.string().required(true),
         phone: Yup.string().required(true),
-        birthDate: Yup.string().required(true)        
+        birthDate: Yup.string().required(true),
     };
 }
 
@@ -200,6 +225,6 @@ const styles = StyleSheet.create({
     },
     btn: {
         marginBottom: 80,
-        marginTop: 90,        
+        marginTop: 90,
     },
 });

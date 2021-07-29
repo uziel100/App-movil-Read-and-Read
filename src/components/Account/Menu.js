@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-import { Button, List, Text } from "react-native-paper";
+import { Button, List, Text, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, StyleSheet, Switch, View } from "react-native";
 import useAuth from "../../hooks/useAuth";
 import colors from "../../styles/colors";
 
 export default function Menu() {
-    const { logout } = useAuth();
+    const { logout, theme, toggleTheme } = useAuth();
     const navigation = useNavigation();
     const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const toggleSwitch = () => {
+        setIsEnabled(previousState => !previousState);
+        toggleTheme()
+    } 
+
+    const paperTheme = useTheme();
 
     const logoutApp = () => {
         Alert.alert(
@@ -28,7 +33,7 @@ export default function Menu() {
         );
     };
     return (
-        <View style={{ marginBottom: "40%" }}>
+        <View style={{ marginBottom: "40%", backgroundColor: paperTheme.colors.surface }}>
             <List.Section>
                 <List.Subheader>Mi cuenta</List.Subheader>
                 <List.Item

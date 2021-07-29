@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, LogBox } from 'react-native'
+import { StyleSheet, View, LogBox } from 'react-native'
+import { Text } from 'react-native-paper'
 import DropDownPicker from "react-native-dropdown-picker";
+import useAuth from '../../hooks/useAuth';
 
 export default function gender({ gender, setGender  }) {
+    const { theme } = useAuth()
     const [ open, setOpen ] = useState ( false );    
     const [ itemsarray, setItemsarray ] = useState ( [ 
         { label: 'Masculino', value: "Masculino"},
@@ -30,7 +33,8 @@ export default function gender({ gender, setGender  }) {
                 labelStyle={styles.labelStyle}
                 onChangeValue={(value) => setGender(value)}
                 dropDownDirection="BOTTOM"  
-                mode="BADGE"              
+                mode="BADGE"  
+                theme={ theme === 'dark'? 'DARK' : 'LIGHT'}
             />
         </View>
     )
@@ -53,6 +57,7 @@ const styles = StyleSheet.create({
     label:{
       fontSize: 14,
       marginLeft: 5,
-      color: '#555'
+      color: '#555',
+      marginBottom: 5      
     }
   });

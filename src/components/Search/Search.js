@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigation} from "@react-navigation/native";
 import { StyleSheet } from "react-native";
-import { Searchbar } from "react-native-paper";
+import { Searchbar, useTheme } from "react-native-paper";
 import colors from "../../styles/colors";
 
 export default function Search() {
@@ -11,6 +11,8 @@ export default function Search() {
     const [searchQuery, setSearchQuery] = useState("");
 
     const onChangeSearch = (query) => setSearchQuery(query);
+
+    const paperTheme = useTheme();
 
     const onSearch = () => {        
         navigation.navigate("search", { query:  searchQuery });
@@ -24,16 +26,15 @@ export default function Search() {
             value={searchQuery}
             onSubmitEditing={ onSearch }
             placeholder="Ecuentra tus ebooks"
-            inputStyle={ styles.inputStyle }
-            iconColor="#134E5E"
-            style={ styles.bg }            
+            inputStyle={ styles.inputStyle }            
+            iconColor={paperTheme.colors.iconSearch}
+            style={ { backgroundColor: paperTheme.colors.search} }            
         />
     );
 }
 
 const styles = StyleSheet.create({
     inputStyle: {
-        color: "#000",
         borderColor: "#fff",
         shadowOpacity: 0
     },

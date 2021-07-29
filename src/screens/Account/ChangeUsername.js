@@ -1,13 +1,12 @@
 import React, { useState, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import { TextInput, Button } from "react-native-paper";
+import { TextInput, Button, useTheme } from "react-native-paper";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Toast from "react-native-toast-message";
 import { getUsernameApi, updateUsernameApi } from "../../api/user";
 import useAuth from "../../hooks/useAuth";
-import colors from "../../styles/colors";
 import { formStyle } from "../../styles";
 import { setUsernameApi } from "../../api/username";
 
@@ -15,11 +14,12 @@ export default function ChangeUsername() {
     const { auth } = useAuth();
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
+    const paperTheme = useTheme();
 
     useFocusEffect(
         useCallback(() => {
             (async () => {
-                const response = await getUsernameApi(auth);                
+                const response = await getUsernameApi(auth);
                 await formik.setFieldValue("username", response.username);
             })();
         }, [])
@@ -33,16 +33,16 @@ export default function ChangeUsername() {
             try {
                 const response = await updateUsernameApi(auth, formData);
                 if (!response.status) throw "El nombre de usuario ya existe";
-                await setUsernameApi( formData.username )
+                await setUsernameApi(formData.username);
                 navigation.goBack();
-            } catch (error) {                
+            } catch (error) {
                 Toast.show({
-                    text1: error,                    
+                    text1: error,
                     autoHide: true,
                     type: "error",
                     topOffset: 50,
                     position: "bottom",
-                });                
+                });
                 formik.setFieldError("username", true);
                 setLoading(false);
             }
@@ -50,10 +50,18 @@ export default function ChangeUsername() {
     });
 
     return (
-        <View style={styles.content}>
+        <View
+            style={[
+                styles.container,
+                { backgroundColor: paperTheme.colors.surface },
+            ]}
+        >
             <TextInput
                 label="Nombre de usuario"
-                style={formStyle.input}
+                style={[
+                    formStyle.input,
+                    { backgroundColor: paperTheme.colors.input },
+                ]}
                 onChangeText={(text) => formik.setFieldValue("username", text)}
                 value={formik.values.username}
                 error={formik.errors.username}
@@ -62,7 +70,7 @@ export default function ChangeUsername() {
                 mode="contained"
                 style={formStyle.btnAccent}
                 onPress={formik.handleSubmit}
-                disabled={ loading }
+                disabled={loading}
             >
                 Guardar cambios
             </Button>
@@ -83,7 +91,8 @@ function validationSchema() {
 }
 
 const styles = StyleSheet.create({
-    content: {
+    container: {
+        flex: 1,
         padding: 20,
     },
 });

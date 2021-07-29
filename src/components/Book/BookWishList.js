@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { Button, Card } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native'
+import { Button, Card, Text } from 'react-native-paper';
 import colors from '../../styles/colors';
 import { URL_IMG, URL_SITE } from '../../utils/constants'
 import * as Linking from 'expo-linking';
@@ -61,8 +61,7 @@ const styles = StyleSheet.create({
     },
     book_content__price:{
         fontSize: 18,
-        fontWeight: 'bold',
-        color: '#000'        
+        fontWeight: 'bold'          
     },
     book_content__btn:{
         width: 100, marginTop: 10 
