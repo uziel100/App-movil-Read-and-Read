@@ -1,5 +1,5 @@
-//export const API_URL = 'http://192.168.1.104:8080/api/v1';
-export const API_URL = 'https://api-read-and-read.herokuapp.com/api/v1';
+export const API_URL = 'http://192.168.1.104:8080/api/v1';
+// export const API_URL = 'https://api-read-and-read.herokuapp.com/api/v1';
 export const URL_IMG = 'https://d3a1k1s7tqtsjr.cloudfront.net/imageBook';
 export const URL_IMG_AVATAR = 'https://d3a1k1s7tqtsjr.cloudfront.net/avatar';
 export const URL_SITE = 'https://read-and-read.herokuapp.com'

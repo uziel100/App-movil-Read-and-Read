@@ -9,6 +9,7 @@ import TabsNavigation from "./TabsNavigation";
 import * as ScreenOrientation from "expo-screen-orientation";
 import colors from "../styles/colors";
 import AboutApp from "../screens/Account/AboutApp";
+import DetailBook from "../screens/Book/DetailBook";
 const Stack = createStackNavigator();
 
 export default function AppNavigation() {
@@ -52,6 +53,21 @@ export default function AppNavigation() {
                     name="about-app"
                     component={AboutApp}
                 />
+                  <Stack.Screen
+                name="detail-book"
+                component={DetailBook}               
+                options={{
+                    title: '',
+                    headerStyle: {
+                      backgroundColor: '#052149',
+                      elevation: 0                     
+                    },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                      fontWeight: 'bold',
+                    },
+                  }}
+            />
             </Stack.Navigator>
         </NavigationContainer>
     );

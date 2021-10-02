@@ -12,7 +12,7 @@ export const getBooksByUserApi = async (auth) => {
             }
         }
         const request = await fetch(url, params);
-        const result = request.json();
+        const result = await request.json();
         return result;
     } catch (error) {
         console.log(error);
@@ -50,7 +50,7 @@ export const getRecentlyReadBooksByUserApi = async (auth) => {
             }
         }
         const request = await fetch(url, params);
-        const result = request.json();
+        const result = await request.json();        
         return result;
     } catch (error) {
         console.log(error);

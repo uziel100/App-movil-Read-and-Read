@@ -4,18 +4,36 @@ import { Card, Paragraph } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { URL_IMG } from "../../utils/constants";
 
-export default function BookItem({ fileName, title, imgUrl, width = 120, height = 150 }) {
+export default function BookItem({
+    fileName,
+    title,
+    summary,
+    lang,
+    numPages,
+    score,
+    imgUrl,
+    width = 120,
+    height = 150,
+}) {
     const navigation = useNavigation();
-
-    const goToPreviewBook = () => {
-        navigation.navigate("view-book", { title, fileName });
+    
+    const goToPreviewBook = () => {        
+        navigation.navigate("detail-book", {
+            title,
+            fileName,
+            summary,
+            lang,
+            numPages,
+            score,
+            imgUrl
+        });
     };
 
     return (
         <TouchableOpacity onPress={goToPreviewBook}>
-            <Card mode="outlined" style={{...styles.container, width: width}}>
+            <Card mode="outlined" style={{ ...styles.container, width: width }}>
                 <Card.Cover
-                    style={ {...styles.image, height: height}}
+                    style={{ ...styles.image, height: height }}
                     source={{ uri: `${URL_IMG}/${imgUrl}` }}
                 />
                 <Paragraph style={styles.title} numberOfLines={1}>
@@ -27,12 +45,12 @@ export default function BookItem({ fileName, title, imgUrl, width = 120, height 
 }
 
 const styles = StyleSheet.create({
-    container: {        
+    container: {
         marginBottom: 5,
         marginRight: 10,
     },
     image: {
-        width: "100%"        
+        width: "100%",
     },
     title: {
         fontSize: 11,
