@@ -12,6 +12,8 @@ export default function BookItem({
     numPages,
     score,
     imgUrl,
+    id,
+    favorite,
     width = 120,
     height = 150,
 }) {
@@ -25,7 +27,9 @@ export default function BookItem({
             lang,
             numPages,
             score,
-            imgUrl
+            imgUrl,
+            id,
+            favorite
         });
     };
 

@@ -1,27 +1,52 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Button, Image } from "react-native";
-// import { Button } from 'react-native-paper';
-import {
-    TouchableHighlight,
+import {    
     TouchableNativeFeedback,
+    TouchableOpacity,
 } from "react-native-gesture-handler";
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
 import FontAwIcon from "react-native-vector-icons/FontAwesome";
 import StatusBarCustom from "../../components/StatusBarCustom";
 import { URL_IMG } from "../../utils/constants";
 import { useNavigation } from "@react-navigation/native";
+import { putBookInFavoriteApi } from "../../api/books";
+import useAuth from "../../hooks/useAuth";
+import Toast from "react-native-toast-message";
 
 export default function DetailBook({ route: { params } }) {
     const navigation = useNavigation();
-    const { title, fileName, summary, lang, numPages, score, imgUrl, favorite } = params;
+    const { auth } = useAuth();
+    const { title, fileName, summary, lang, numPages, score, imgUrl, favorite, id } = params;
 
     const [isInFavorites, setIsInFavorites] = useState(favorite);
     const [iconStar, setIconStar] = useState( favorite? "star" : "star-o");
+    const [loading, setLoading] = useState( false );
+    
 
-    const handleFavorites = () => {
-        setIsInFavorites(!isInFavorites);
-
-        setIconStar(isInFavorites ? "star" : "star-o");
+    const handleFavorites = async () => {
+        setLoading( true );
+        try {            
+            const fav = !isInFavorites;
+            await putBookInFavoriteApi( auth, { 
+                id, 
+                isFavorite: fav 
+            })                        
+            setIsInFavorites( fav );            
+            setIconStar(fav ? "star" : "star-o");            
+        } catch (error) {
+            console.log(error);
+            Toast.show({
+                text1: "Ha ocurrido un error",
+                text2: "Intentelo de nuevo",
+                autoHide: true,
+                type: "error",
+                topOffset: 80,
+                position: "top",
+            });
+        }finally{
+            setLoading( false );
+        }        
+        
     };
 
     const sliceText = (text, limit) => {
@@ -79,12 +104,12 @@ export default function DetailBook({ route: { params } }) {
                     <View>
                         <View style={styles.boxTitle}>
                             <Text style={styles.title}>Acerca del libro</Text>
-                            <TouchableHighlight>
+                            <TouchableOpacity onPress={ () => console.log('press me') }>
                                 <IoniconsIcon
                                     style={styles.icon}
                                     name="arrow-forward-outline"
                                 />
-                            </TouchableHighlight>
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.boxDescription}>
                             <Text style={styles.desc}>
@@ -97,6 +122,7 @@ export default function DetailBook({ route: { params } }) {
                             <TouchableNativeFeedback
                                 style={styles.iconFavorite}
                                 onPress={handleFavorites}
+                                disabled={ loading }
                             >
                                 <FontAwIcon
                                     color="#EDC90F"
@@ -104,13 +130,13 @@ export default function DetailBook({ route: { params } }) {
                                     name={iconStar}
                                 />
                             </TouchableNativeFeedback>
-                            <TouchableNativeFeedback style={styles.btnRead}
+                            <TouchableOpacity  style={styles.btnRead}
                                 onPress={ goPdfViewer }
                             >
                                 <Text style={styles.textCenter}>
                                     Iniciar lectura
                                 </Text>
-                            </TouchableNativeFeedback>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>

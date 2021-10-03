@@ -20,7 +20,7 @@ export default function NewBooks() {
             setBooks( null );
             (async () => {
                 const data = await getBooksByUserApi(auth);  
-                setBooks( data.books );                
+                setBooks( data.books );   
             })();
         }, [])
     );
@@ -52,6 +52,7 @@ export default function NewBooks() {
                                 score={ item.book.score }
                                 imgUrl={ item.book.imgUrl }
                                 favorite={ item.favorite }
+                                id={ item._id }
                             />
                         ))}
                     </ScrollView>

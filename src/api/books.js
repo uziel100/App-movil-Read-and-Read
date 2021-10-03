@@ -76,3 +76,25 @@ export const getFavoritesBooksByUserApi = async (auth) => {
         return null;
     }
 }
+
+export const putBookInFavoriteApi = async (auth, formData) => {    
+    try {
+        const url = `${API_URL}/user-book/favorite`;     
+        
+        const params = {
+            method: "PUT",
+            headers: {                
+                "Content-Type": "application/json",
+                "token": `Bearer ${auth.token}`,
+            },
+            body: JSON.stringify(formData),
+        };        
+        const request = await fetch(url, params);        
+        const result = await request.json();                
+        return result;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+

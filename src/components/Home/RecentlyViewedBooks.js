@@ -50,6 +50,7 @@ export default function NewBooks() {
                                 score={ item.book.score }
                                 imgUrl={ item.book.imgUrl }
                                 favorite={ item.favorite }
+                                id={ item._id }
                             />
                         ))}
                     </ScrollView>

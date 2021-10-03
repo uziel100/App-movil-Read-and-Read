@@ -39,6 +39,13 @@ export default function ListYourBooks() {
                                 imgUrl={product.book.imgUrl}
                                 title={product.book.title}
                                 fileName={product.book.fileName}
+                                summary={ product.book.summary }
+                                lang={ product.book.lang }
+                                numPages={ product.book.numPages }
+                                score={ product.book.score }
+                                imgUrl={ product.book.imgUrl }
+                                favorite={ product.favorite }
+                                id={ product._id }
                                 width={width}
                                 height={height}
                             />
