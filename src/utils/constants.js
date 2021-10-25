@@ -8,6 +8,7 @@ export const SITE_WEB = 'https://read-and-read.herokuapp.com'
 export const TOKEN = 'token';
 export const EXPO_CLIENT_ID = '451024139586-l4vjvorebt4i0qal3grp44fsscpt627b.apps.googleusercontent.com'
 export const ANDROID_CLIENT_ID = '451024139586-j7mpii1f3epp8eok5kj5k7a71noh1s17.apps.googleusercontent.com'
+export const team = ["Fatyta"]
 
 export const CONFIG_GOOGLE_SIGN_IN = {
     expoClientId: EXPO_CLIENT_ID,
