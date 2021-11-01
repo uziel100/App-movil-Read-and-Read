@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Dimensions } from "react-native";
+import { StyleSheet, View, Text, Dimensions, ScrollView, RefreshControl } from "react-native";
 import { getFavoritesBooksByUserApi } from "../../api/books";
 import { map, size } from "lodash";
 import { useNavigation } from "@react-navigation/native";
@@ -13,44 +13,71 @@ const height = Dimensions.get("window").width / 2;
 export default function ListYourFavoritesBooks() {
     const { auth } = useAuth();
     const [products, setProducts] = useState(null);
-    const [loading, setLoading] = useState( false )
+    const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+    const [pullToRefreshEnabled, setPullToRefreshEnabled] = useState(false);
 
-    useEffect(() => {
+
+    const getData = () => { 
         (async () => {
-            setLoading(true);
             const response = await getFavoritesBooksByUserApi(auth);
             setProducts(response?.books);
             setLoading(false);
+            setPullToRefreshEnabled(true);
+            if (refreshing) {
+                setRefreshing(false);
+            }
         })();
+    }
+    useEffect(() => {
+        setPullToRefreshEnabled(false);
+        setLoading(true);
+        getData();
     }, []);
 
-    if(loading) 
-        return <ScreenLoading />  
+    useEffect(() => {
+        getData();
+    }, [refreshing]);
+
+    const onRefresh = React.useCallback(() => {
+        if (!loading) {
+            setRefreshing(true);
+        }
+    });
+
+
+    if(loading) return <ScreenLoading />  
 
     return (
         <View style={styles.containerRoot}>
             {!products || size(products) === 0 ? (
                 <Text>No hay libros en favoritos</Text>
             ) : (
-                <View style={styles.container}>
-                    {map(products, (product) => (
-                        <BookItem
-                            key={product._id}
-                            imgUrl={product.book.imgUrl}
-                            title={product.book.title}
-                            fileName={product.book.fileName}
-                            summary={ product.book.summary }
-                            lang={ product.book.lang }
-                            numPages={ product.book.numPages }
-                            score={ product.book.score }
-                            imgUrl={ product.book.imgUrl }
-                            favorite={ product.favorite }
-                            id={ product._id }
-                            width={width}
-                            height={height}
-                        />
-                    ))}
-                </View>
+                    <ScrollView style={{ zIndex: 0 }}
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={ 
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={onRefresh}
+                                enabled={pullToRefreshEnabled}
+                                colors={['#2F80ED', '#2F80ED', '#2F80ED']}
+                                progressBackgroundColor="#ffffff"
+                            />
+                        }
+                    >
+                   <View style={styles.container}>
+                        {map(products, (product) => (
+                            <BookItem
+                                key={product._id}
+                                imgUrl={product.book.imgUrl}
+                                title={product.book.title}
+                                fileName={product.book.fileName}
+                                width={width}
+                                height={height}
+                            />
+                        ))}
+                    </View>     
+                </ScrollView>
             )}
         </View>
     );
@@ -67,5 +94,6 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         alignItems: "center",
         justifyContent: "space-between",
+        marginBottom: 150,
     },
 });

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, ScrollView, Dimensions } from "react-native";
+import { StyleSheet, View, Text, ScrollView, Dimensions, RefreshControl } from "react-native";
 
 import { getAllBooksByUserApi } from "../../api/books";
 import { map, size } from "lodash";
@@ -13,16 +13,38 @@ const height = Dimensions.get("window").width / 2;
 export default function ListYourBooks() {
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+    const [pullToRefreshEnabled, setPullToRefreshEnabled] = useState(false);
     const { auth } = useAuth();
 
-    useEffect(() => {
+    const getData = () => { 
         (async () => {
-            setLoading(true);
             const response = await getAllBooksByUserApi(auth);
             setProducts(response?.books);
             setLoading(false);
+            setPullToRefreshEnabled(true);
+            if (refreshing) {
+                setRefreshing(false);
+            }
         })();
+    }
+
+    useEffect(() => {
+        setPullToRefreshEnabled(false);
+        setLoading(true);
+        getData();
     }, []);
+
+    useEffect(() => {
+        getData();
+    }, [refreshing]);
+
+    const onRefresh = React.useCallback(() => {
+        if (!loading) {
+            setRefreshing(true);
+        }
+    });
+
 
     if (loading) return <ScreenLoading />;
 
@@ -31,7 +53,18 @@ export default function ListYourBooks() {
             {!products || size(products) === 0 ? (
                 <Text>No tienes libros agregados</Text>
             ) : (
-                <ScrollView style={{ zIndex: 0 }}>
+                    <ScrollView style={{ zIndex: 0 }} 
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={ 
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={onRefresh}
+                                enabled={pullToRefreshEnabled}
+                                colors={['#2F80ED', '#2F80ED', '#2F80ED']}
+                                progressBackgroundColor="#ffffff"
+                            />
+                        }
+                    >
                     <View style={styles.container}>
                         {map(products, (product) => (
                             <BookItem
@@ -39,13 +72,6 @@ export default function ListYourBooks() {
                                 imgUrl={product.book.imgUrl}
                                 title={product.book.title}
                                 fileName={product.book.fileName}
-                                summary={ product.book.summary }
-                                lang={ product.book.lang }
-                                numPages={ product.book.numPages }
-                                score={ product.book.score }
-                                imgUrl={ product.book.imgUrl }
-                                favorite={ product.favorite }
-                                id={ product._id }
                                 width={width}
                                 height={height}
                             />
