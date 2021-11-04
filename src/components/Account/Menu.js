@@ -59,6 +59,14 @@ export default function Menu() {
                     )}
                     onPress={() => navigation.navigate("about-app")}
                 />
+                 <List.Item
+                    title="Tienes dudas"
+                    description="Contactanos"
+                    left={(props) => (
+                        <List.Icon {...props} icon="information-outline" />
+                    )}
+                    onPress={() => navigation.navigate("contact")}
+                />
                 <List.Item
                     title="Modo oscuro"                    
                     left={(props) => <List.Icon {...props} icon="theme-light-dark" />}

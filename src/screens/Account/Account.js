@@ -6,25 +6,22 @@ import Menu from "../../components/Account/Menu";
 import UserAvatar from "../../components/Account/UserAvatar";
 
 export default function Account() {
-    const { auth } = useAuth();
-    const paperTheme = useTheme();
-    
-    return (
-        <ScrollView
-            style={[
-                styles.container,
-                { backgroundColor: paperTheme.colors.surface },
-            ]}
-        >
-            <UserAvatar user={auth.email} urlPhoto={auth.photo} />
-            <Menu />
-        </ScrollView>
-    );
+  const { auth } = useAuth();
+  const paperTheme = useTheme();
+
+  return (
+    <ScrollView
+      style={[styles.container, { backgroundColor: paperTheme.colors.surface }]}
+    >
+      {/*<UserAvatar user={auth.email} urlPhoto={auth.photo} />*/}
+      <Menu />
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-    },
+  container: {
+    flex: 1,
+    padding: 20,
+  },
 });

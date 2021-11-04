@@ -9,6 +9,7 @@ import TabsNavigation from "./TabsNavigation";
 import * as ScreenOrientation from "expo-screen-orientation";
 import colors from "../styles/colors";
 import AboutApp from "../screens/Account/AboutApp";
+import Contact from "../screens/Account/Contact";
 const Stack = createStackNavigator();
 
 export default function AppNavigation() {
@@ -51,6 +52,11 @@ export default function AppNavigation() {
                     options={{ headerShown: false }}
                     name="about-app"
                     component={AboutApp}
+                />
+                <Stack.Screen
+                 options={{ headerShown: false }}
+                 name="contact"
+                 component={Contact}
                 />
             </Stack.Navigator>
         </NavigationContainer>
