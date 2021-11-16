@@ -53,27 +53,27 @@ export default function ListYourFavoritesBooks() {
             {!products || size(products) === 0 ? (
                 <Text>No hay libros en favoritos</Text>
             ) : (
-                    <ScrollView style={{ zIndex: 0 }}
-                        showsVerticalScrollIndicator={false}
-                        refreshControl={ 
-                            <RefreshControl
-                                refreshing={refreshing}
-                                onRefresh={onRefresh}
-                                enabled={pullToRefreshEnabled}
-                                colors={['#2F80ED', '#2F80ED', '#2F80ED']}
-                                progressBackgroundColor="#ffffff"
-                            />
-                        }
-                    >
+                 <ScrollView style={{ zIndex: 0 }}
+                    showsVerticalScrollIndicator={false}
+                    refreshControl={ 
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                            enabled={pullToRefreshEnabled}
+                            colors={['#2F80ED', '#2F80ED', '#2F80ED']}
+                            progressBackgroundColor="#ffffff"
+                        />
+                    }
+                 >
                    <View style={styles.container}>
                         {map(products, (product) => (
                             <BookItem
-                                key={product._id}
-                                imgUrl={product.book.imgUrl}
-                                title={product.book.title}
-                                fileName={product.book.fileName}
+                                key={product._id}                                
+                                favorite={ product.favorite }
+                                id={ product._id }
                                 width={width}
                                 height={height}
+                                { ...product.book }
                             />
                         ))}
                     </View>     

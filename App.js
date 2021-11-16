@@ -11,23 +11,25 @@ import AuthContext from "./src/context/AuthContext";
 import AppNavigation from "./src/navigation/AppNavigation";
 import AuthScreen from "./src/screens/Auth";
 import colors from "./src/styles/colors"
+import Welcome from "./src/screens/Welcome"
 
 export default function App() {
+    const [isWelcome, setIsWelcome] = useState(true)
     const [auth, setAuth] = useState(undefined);
     const colorScheme = useColorScheme();
     const [theme, setTheme] = useState(
         colorScheme === "dark" ? "dark" : "light"
     );
 
-    const toggleTheme = ( selectTheme ) => {
-        if(!selectTheme){
+    const toggleTheme = (selectTheme) => {
+        if (!selectTheme) {
             setTheme(theme === "light" ? "dark" : "light");
-        }else{
-            setTheme(selectTheme);            
+        } else {
+            setTheme(selectTheme);
         }
 
     };
-    
+
 
     useEffect(() => {
         (async () => {
@@ -89,36 +91,39 @@ export default function App() {
                         theme={
                             theme === "light"
                                 ? {
-                                      ...DefaultTheme,
-                                      colors: {
-                                          ...DefaultTheme.colors,                                          
-                                          version: "#666",
-                                          navegation: colors.bgNavigation,
-                                          input: colors.bgLight,
-                                          search: "#fff",
-                                          iconSearch: "#134E5E",
-                                          titleSelection: "#555",
-                                          ScreenLoading: "#000",
-                                      },
-                                  }
+                                    ...DefaultTheme,
+                                    colors: {
+                                        ...DefaultTheme.colors,
+                                        version: "#666",
+                                        navegation: colors.bgNavigation,
+                                        input: colors.bgLight,
+                                        search: "#fff",
+                                        iconSearch: "#134E5E",
+                                        titleSelection: "#555",
+                                        ScreenLoading: "#000",
+                                    },
+                                }
                                 : {
-                                      ...DarkTheme,
-                                      colors: {
-                                          ...DarkTheme.colors,
-                                          surface: "#18191a",                                          
-                                          version: "#fff",
-                                          navegation: "#242526",
-                                          input: "#3a3b3c",
-                                          search: "#303134",
-                                          iconSearch: "#666",
-                                          titleSelection: "#fff",
-                                          ScreenLoading: colors.accent,
-                                      },
-                                  }
+                                    ...DarkTheme,
+                                    colors: {
+                                        ...DarkTheme.colors,
+                                        surface: "#18191a",
+                                        version: "#fff",
+                                        navegation: "#242526",
+                                        input: "#3a3b3c",
+                                        search: "#303134",
+                                        iconSearch: "#666",
+                                        titleSelection: "#fff",
+                                        ScreenLoading: colors.accent,
+                                    },
+                                }
                         }
                         style={styles.container}
                     >
-                        {auth ? <AppNavigation /> : <AuthScreen />}
+                        {(isWelcome && !auth) ?
+                            <Welcome setIsWelcome={ setIsWelcome } /> : auth ?
+                                <AppNavigation /> : <AuthScreen />
+                        }
                     </PaperProvider>
                     <Toast ref={(ref) => Toast.setRef(ref)} />
                 </AuthContext.Provider>

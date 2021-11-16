@@ -68,12 +68,12 @@ export default function ListYourBooks() {
                     <View style={styles.container}>
                         {map(products, (product) => (
                             <BookItem
-                                key={product._id}
-                                imgUrl={product.book.imgUrl}
-                                title={product.book.title}
-                                fileName={product.book.fileName}
+                                key={product._id}                             
+                                favorite={ product.favorite }
+                                id={ product._id }
                                 width={width}
                                 height={height}
+                                { ...product.book }
                             />
                         ))}
                     </View>

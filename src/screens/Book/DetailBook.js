@@ -16,13 +16,11 @@ import Toast from "react-native-toast-message";
 export default function DetailBook({ route: { params } }) {
     const navigation = useNavigation();
     const { auth } = useAuth();
-    const { title, fileName, summary, lang, numPages, score, imgUrl, favorite, id } = params;
-
-    const [isInFavorites, setIsInFavorites] = useState(favorite);
+    const { id, favorite, ...book } = params;
+    const [isInFavorites, setIsInFavorites] = useState( favorite);
     const [iconStar, setIconStar] = useState( favorite? "star" : "star-o");
     const [loading, setLoading] = useState( false );
     
-
     const handleFavorites = async () => {
         setLoading( true );
         try {            
@@ -34,7 +32,6 @@ export default function DetailBook({ route: { params } }) {
             setIsInFavorites( fav );            
             setIconStar(fav ? "star" : "star-o");            
         } catch (error) {
-            console.log(error);
             Toast.show({
                 text1: "Ha ocurrido un error",
                 text2: "Intentelo de nuevo",
@@ -45,8 +42,7 @@ export default function DetailBook({ route: { params } }) {
             });
         }finally{
             setLoading( false );
-        }        
-        
+        }                
     };
 
     const sliceText = (text, limit) => {
@@ -57,17 +53,21 @@ export default function DetailBook({ route: { params } }) {
     }
 
     const goPdfViewer = () => {
-        navigation.navigate("view-book", { title, fileName });
+        navigation.navigate("view-book", { title: book.title, fileName: book.fileName });
+    }
+
+    const goToAllDetail = () => {
+        navigation.navigate("all-detail-book", { ...book });
     }
 
     return (
         <>
             <StatusBarCustom backgroundColor={"#052149"} />
-            <View style={styles.container}>
+            <View style={styles.container}>            
                 <View style={styles.banner}>
                     <View style={{ alignItems: "center" }}>
                         <Image
-                            source={{ uri: `${URL_IMG }/${imgUrl}` }}
+                            source={{ uri: `${URL_IMG }/${book.imgUrl}` }}
                             style={{ width: 145, height: 200 }}
                         />
                         <Text
@@ -78,7 +78,7 @@ export default function DetailBook({ route: { params } }) {
                                 marginBottom: 16
                             }}
                         >
-                            { sliceText(title, 50) }
+                            { sliceText(book.title, 50) }
                         </Text>
                     </View>
                     <View>
@@ -88,13 +88,13 @@ export default function DetailBook({ route: { params } }) {
                                 <Text style={styles.itemValue}>Valoración</Text>
                             </View>
                             <View style={[styles.item, styles.itemBoder]}>
-                                <Text style={styles.itemDesc}>{ numPages }</Text>
+                                <Text style={styles.itemDesc}>{ book.numPages }</Text>
                                 <Text style={styles.itemValue}>
                                     Num. paginas
                                 </Text>
                             </View>
                             <View style={styles.item}>
-                                <Text style={styles.itemDesc}>{ lang.name }</Text>
+                                <Text style={styles.itemDesc}>{ book.lang.name }</Text>
                                 <Text style={styles.itemValue}>Idioma</Text>
                             </View>
                         </View>
@@ -104,7 +104,7 @@ export default function DetailBook({ route: { params } }) {
                     <View>
                         <View style={styles.boxTitle}>
                             <Text style={styles.title}>Acerca del libro</Text>
-                            <TouchableOpacity onPress={ () => console.log('press me') }>
+                            <TouchableOpacity onPress={ goToAllDetail }>
                                 <IoniconsIcon
                                     style={styles.icon}
                                     name="arrow-forward-outline"
@@ -113,7 +113,7 @@ export default function DetailBook({ route: { params } }) {
                         </View>
                         <View style={styles.boxDescription}>
                             <Text style={styles.desc}>
-                                { sliceText(summary, 225) }
+                                { sliceText(book.summary, 225) }
                             </Text>
                         </View>
                     </View>
