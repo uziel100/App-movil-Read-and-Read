@@ -42,17 +42,10 @@ export default function NewBooks() {
                     >
                         {books.map((item) => (
                             <BookItem
-                                key={item.book._id}
-                                imgUrl={item.book.imgUrl}
-                                title={item.book.title}
-                                fileName={ item.book.fileName }
-                                summary={ item.book.summary }
-                                lang={ item.book.lang }
-                                numPages={ item.book.numPages }
-                                score={ item.book.score }
-                                imgUrl={ item.book.imgUrl }
+                                key={item.book._id}                               
                                 favorite={ item.favorite }
                                 id={ item._id }
+                                { ...item.book }
                             />
                         ))}
                     </ScrollView>

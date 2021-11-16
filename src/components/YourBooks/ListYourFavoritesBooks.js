@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Dimensions } from "react-native";
+import { StyleSheet, View, Text, Dimensions, ScrollView } from "react-native";
 import { getFavoritesBooksByUserApi } from "../../api/books";
 import { map, size } from "lodash";
 import { useNavigation } from "@react-navigation/native";
@@ -32,25 +32,20 @@ export default function ListYourFavoritesBooks() {
             {!products || size(products) === 0 ? (
                 <Text>No hay libros en favoritos</Text>
             ) : (
-                <View style={styles.container}>
-                    {map(products, (product) => (
-                        <BookItem
-                            key={product._id}
-                            imgUrl={product.book.imgUrl}
-                            title={product.book.title}
-                            fileName={product.book.fileName}
-                            summary={ product.book.summary }
-                            lang={ product.book.lang }
-                            numPages={ product.book.numPages }
-                            score={ product.book.score }
-                            imgUrl={ product.book.imgUrl }
-                            favorite={ product.favorite }
-                            id={ product._id }
-                            width={width}
-                            height={height}
-                        />
-                    ))}
-                </View>
+                <ScrollView style={{ zIndex: 0 }}>
+                    <View style={styles.container}>
+                        {map(products, (product) => (
+                            <BookItem
+                                key={product._id}                                
+                                favorite={ product.favorite }
+                                id={ product._id }
+                                width={width}
+                                height={height}
+                                { ...product.book }
+                            />
+                        ))}
+                    </View>
+                </ScrollView>
             )}
         </View>
     );

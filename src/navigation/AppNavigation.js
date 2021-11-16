@@ -10,6 +10,7 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import colors from "../styles/colors";
 import AboutApp from "../screens/Account/AboutApp";
 import DetailBook from "../screens/Book/DetailBook";
+import AllDetailBook from "../screens/Book/AllDetailBook"
 const Stack = createStackNavigator();
 
 export default function AppNavigation() {
@@ -22,11 +23,11 @@ export default function AppNavigation() {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator 
+            <Stack.Navigator
                 initialRouteName="tabs-app"
                 screenOptions={{
                     headerTintColor: colors.fontLight,
-                    headerStyle: { backgroundColor: colors.accent }                   
+                    headerStyle: { backgroundColor: colors.accent }
                 }}
             >
                 <Stack.Screen
@@ -46,28 +47,36 @@ export default function AppNavigation() {
                                 }}
                             />
                         ),
-                    })}                  
+                    })}
                 />
                 <Stack.Screen
                     options={{ headerShown: false }}
                     name="about-app"
                     component={AboutApp}
                 />
-                  <Stack.Screen
-                name="detail-book"
-                component={DetailBook}               
-                options={{
-                    title: '',
-                    headerStyle: {
-                      backgroundColor: '#052149',
-                      elevation: 0                     
-                    },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                      fontWeight: 'bold',
-                    },
-                  }}
-            />
+                <Stack.Screen
+                    name="detail-book"
+                    component={DetailBook}
+                    options={{
+                        title: '',
+                        headerStyle: {
+                            backgroundColor: '#052149',
+                            elevation: 0
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                    }}
+                />
+                <Stack.Screen
+                    name="all-detail-book"
+                    component={AllDetailBook}
+                    options={{
+                        title: '',                       
+                    }}
+                />
+
             </Stack.Navigator>
         </NavigationContainer>
     );
