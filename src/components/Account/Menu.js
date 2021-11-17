@@ -12,7 +12,7 @@ export default function Menu() {
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState);
         toggleTheme()
-    } 
+    }
 
     const paperTheme = useTheme();
 
@@ -60,7 +60,13 @@ export default function Menu() {
                     onPress={() => navigation.navigate("about-app")}
                 />
                 <List.Item
-                    title="Modo oscuro"                    
+                    title="Tienes dudas"
+                    description="Contactanos"
+                    left={(props) => <List.Icon {...props} icon="information-outline" />}
+                    onPress={() => navigation.navigate("contact")}
+                />
+                <List.Item
+                    title="Modo oscuro"
                     left={(props) => <List.Icon {...props} icon="theme-light-dark" />}
                     right={(props) => <Switch
                         trackColor={{ false: '#ccc', true: '#ccc' }}
@@ -69,7 +75,7 @@ export default function Menu() {
                         onValueChange={toggleSwitch}
                         value={isEnabled}
                     />}
-                    onPress={ toggleSwitch }
+                    onPress={toggleSwitch}
                 />
             </List.Section>
             <View style={styles.containerLogout}>
